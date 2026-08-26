@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'gemini_service.dart';
 
 void main() {
   runApp(const TalkingAvatarApp());
