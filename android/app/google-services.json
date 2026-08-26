@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "744515996792",
+    "project_id": "ai-talking-avatar-c9de2",
+    "storage_bucket": "ai-talking-avatar-c9de2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:744515996792:android:c421387fe668079a68718d",
+        "android_client_info": {
+          "package_name": "com.example.ai_talking_avatar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCsQDkpRz1fU0L5PHICeIrup8NvrTH81Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
