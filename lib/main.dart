@@ -20,7 +20,7 @@ class TalkingAvatarApp extends StatelessWidget {
 }
 
 class AvatarHomePage extends StatefulWidget {
-  const AvatarHomePage({super.key});
+  const AvatarHomePage({super.key}); 
 
   @override
   State<AvatarHomePage> createState() => _AvatarHomePageState();
@@ -28,20 +28,43 @@ class AvatarHomePage extends StatefulWidget {
 
 class _AvatarHomePageState extends State<AvatarHomePage> {
   final TextEditingController _controller = TextEditingController();
+  late final GeminiService _gemini;
 
   String _message = 'Hello! I am your AI assistant.';
 
-  void _sendMessage() {
-    final text = _controller.text.trim();
+  Future<void> _sendMessage() async {
+  final text = _controller.text.trim();
 
-    if (text.isEmpty) return;
+  if (text.isEmpty) return;
+
+  setState(() {
+    _message = 'Thinking...';
+    _controller.clear();
+  });
+
+  try {
+    final reply = await _gemini.sendMessage(text);
+
+    if (!mounted) return;
 
     setState(() {
-      _message = 'You said: $text';
-      _controller.clear();
+      _message = reply;
+    });
+  } catch (e) {
+    if (!mounted) return;
+
+    setState(() {
+      _message = 'Sorry, something went wrong.';
     });
   }
-
+  }
+  
+ @override
+ void initState() {
+  super.initState();
+  _gemini = GeminiService('YOUR_API_KEY');
+ }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
