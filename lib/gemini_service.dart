@@ -1,38 +1,19 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:firebase_ai/firebase_ai.dart';
 
 class GeminiService {
-  final String apiKey;
+  late final GenerativeModel _model;
 
-  GeminiService(this.apiKey);
+  GeminiService() {
+    _model = FirebaseAI.googleAI().generativeModel(
+      model: 'gemini-3.7-flash',
+    );
+  }
 
   Future<String> sendMessage(String message) async {
-    final url = Uri.parse(
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=$apiKey',
-    );
+    final response = await _model.generateContent([
+      Content.text(message),
+    ]);
 
-    final response = await http.post(
-      url,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode({
-        'contents': [
-          {
-            'parts': [
-              {'text': message}
-            ]
-          }
-        ]
-      }),
-    );
-
-    if (response.statusCode != 200) {
-      throw Exception('Gemini API error: ${response.statusCode}');
-    }
-
-    final data = jsonDecode(response.body);
-
-    return data['candidates'][0]['content']['parts'][0]['text'];
+    return response.text ?? 'मुझे कोई जवाब नहीं मिला।';
   }
 }
