@@ -62,7 +62,7 @@ class _AvatarHomePageState extends State<AvatarHomePage> {
  @override
  void initState() {
   super.initState();
-  gemini = GeminiService();
+  _gemini = GeminiService();
  }
   
   @override
