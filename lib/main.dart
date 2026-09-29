@@ -59,12 +59,12 @@ class _AvatarHomePageState extends State<AvatarHomePage> {
       _message = reply;
     });
   } catch (e) {
-    if (!mounted) return;
+  if (!mounted) return;
 
-    setState(() {
-      _message = 'Sorry, something went wrong.';
-    });
-  }
+  setState(() {
+    _message = 'Error: $e';
+  });
+}
   }
   
  @override
