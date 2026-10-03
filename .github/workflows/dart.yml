@@ -23,6 +23,14 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Get SHA-256
+        run: |
+          keytool -list -v \
+            -keystore ~/.android/debug.keystore \
+            -alias androiddebugkey \
+            -storepass android \
+            -keypass android
+
       - name: Build APK
         run: flutter build apk --release
 
