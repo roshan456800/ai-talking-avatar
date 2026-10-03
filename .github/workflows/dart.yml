@@ -23,6 +23,19 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Create debug keystore
+        run: |
+          mkdir -p ~/.android
+          keytool -genkeypair -v \
+            -keystore ~/.android/debug.keystore \
+            -alias androiddebugkey \
+            -keypass android \
+            -storepass android \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -dname "CN=Android Debug,O=Android,C=US"
+
       - name: Get SHA-256
         run: |
           keytool -list -v \
