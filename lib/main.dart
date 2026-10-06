@@ -43,6 +43,7 @@ class _AvatarHomePageState extends State<AvatarHomePage> {
   late final GeminiService _gemini;
 
   String _message = 'Hello! I am your AI assistant.';
+  String _debugToken = '';
 
   Future<void> _sendMessage() async {
   final text = _controller.text.trim();
@@ -72,10 +73,29 @@ class _AvatarHomePageState extends State<AvatarHomePage> {
   }
   
  @override
- void initState() {
+void initState() {
+  Future<void> _getDebugToken() async {
+  try {
+    final token = await FirebaseAppCheck.instance.getToken(true);
+
+    if (!mounted) return;
+
+    setState(() {
+      _debugToken = token ?? 'Token नहीं मिला';
+      _message = 'Debug Token:\n$_debugToken';
+    });
+  } catch (e) {
+    if (!mounted) return;
+
+    setState(() {
+      _message = 'Token Error: $e';
+    });
+  }
+  }
   super.initState();
   _gemini = GeminiService();
- }
+  _getDebugToken();
+}
   
   @override
   Widget build(BuildContext context) {
